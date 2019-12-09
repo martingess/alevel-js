@@ -93,19 +93,26 @@ document.write(str)
 //Сделать HTML-конструктор из деревянной структуры, которая была на прошлом занятии:
 //рекурсивный способ
 function htmlBuilder(obj) {
+    function attrs() { //для задания атрибутов
+        if ('attrs' in obj) { //атрибуты тега
+            var str = '';
+            for (let key in obj.attrs) {
+                str += `${key} = '${obj.attrs[key]}'`
+            }
+            return str;
+        }
+        return '';
+    }
+
     var str = '';
     if (obj.subTags === undefined) { //базовый случай для рекурсивного вызова
-        return `<${obj.tagName}>${obj.text}</${obj.tagName}>`
+        str += `<${obj.tagName}`
+        str += `${attrs()}>`
+        str += `${obj.text}</${obj.tagName}>`
+        return str
     }
-
     str += `<${obj.tagName} ` //открывающий тег
-    if ('attrs' in obj) { //атрибуты тега
-        for (let key in obj.attrs) {
-            str += `${key} = '${obj.attrs[key]}'`
-        }
-    }
-    str += '>' //закрывающая скобка для открывающего тега
-
+    str += `${attrs()}>` //закрывающая скобка для открывающего тега
     obj.subTags.forEach((element, index) => { //рекурсия для сабтегов
         str += `${htmlBuilder(obj.subTags[index])}`
     })
