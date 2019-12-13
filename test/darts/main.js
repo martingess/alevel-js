@@ -1,44 +1,68 @@
-// let gameLogic = {
-//     scope = {
-//         position = 
-//     }
-// }
+let scopeImg = document.querySelector('#scope')
+scopeImg.style.top = 200 + 'px';
+scopeImg.style.left = 200 + 'px';
 
-let scope = document.querySelector('#scope')
 let target = document.querySelector('#target')
 
-let scopePos = {
-    originCoordinatsX: null,
-    originCoordinatsY: null
-}
-scope.style.display = 'block'
+function Scope() {
+    this.scopePassedX = 0;
+    this.scopePassedY = 0;
+    this.stepX = 1;
+    this.stepY = 1;
+    this.movingStart = () => {
+        this.move = setInterval(() => {
+            this.scopePassedX += this.stepX;
+            this.scopePassedY += this.stepY;
+            updateScopePosition(this.stepX, this.stepY)
+            if (this.scopePassedY > 50 || this.scopePassedY < -50) {
+                this.scopePassedY = this.scopePassedY > 0 ? 50 : -50
+                this.stepY = -this.stepY;
+            };
+            if (this.scopePassedX > 60 || this.scopePassedX < -60) {
+                this.scopePassedX = this.scopePassedX > 0 ? 60 : -60
+                this.stepX = -this.stepX;
+            };
 
+            function updateScopePosition(x, y) {
+                let positionNowX = parseInt(scopeImg.style.left);
+                let positionNowY = parseInt(scopeImg.style.top);
+                scopeImg.style.left = positionNowX + x + 'px';
+                scopeImg.style.top = positionNowY + y + 'px';
+            }
+        }, 10)
+    };
 
-
-function coordinat(event) {
-    let max = 100;
-    let min = -100;
-    let direction = Math.random();
-
-    
-    scopePos.smeshenie = Math.random()
-    if (Math.random() > 0.5) {
-        scopePos.smeshenie *= -1;
+    this.movingStop = () => {
+        clearInterval(this.move)
     }
-    scopePos.originCoordinatsY += scopePos.smeshenie;
-    scopePos.originCoordinatsX += scopePos.smeshenie;
-    scope.style.top = event.clientY + scopePos.originCoordinatsY + 'px';
-    scope.style.left = event.clientX + scopePos.originCoordinatsX + 'px';
 }
 
-document.body.addEventListener('mousemove', coordinat)
-document.body.addEventListener('mousedown', () => {
+document.body.addEventListener('mousemove', (event) => { //отслеживаем движение мыши
+    scope.mousePosX = event.clientX;
+    scope.mousePosY = event.clientY;
+});
 
-})
-document.body.addEventListener('mouseup', () => {
-    document.body.removeEventListener('mousemove', coordinat)
-})
+// function moveScope() {
+//     let scope.stepY = 1
+//     let scope.stepX = 1
+//     let move = setInterval(() => {
+//         scope.scopePassedX += scope.stepX;
+//         scope.scopePassedY += scope.stepY;
+//         updateScopePosition(scope.stepX, scope.stepY)
+//         if (scope.scopePassedY > 50 || scope.scopePassedY < -50) {
+//             scope.scopePassedY = scope.scopePassedY > 0 ? 50 : -50
+//             scope.stepY = -scope.stepY;
+//         }
+//         if (scope.scopePassedX > 60 || scope.scopePassedX < -60) {
+//             scope.scopePassedX = scope.scopePassedX > 0 ? 60 : -60
+//             scope.stepX = -scope.stepX;
+//         }
+//     }, 10)
 
-//при нажатии мыши в рандомном месте с определённым радиусом появлятся прицел
-//он сразу начинает двигаться относительно своих начальных координатов
-//при отжатии мыши происходит фиксация координатов прицела
+//     function updateScopePosition(x, y) {
+//         let positionNowX = parseInt(scopeImg.style.left);
+//         let positionNowY = parseInt(scopeImg.style.top);
+//         scopeImg.style.left = positionNowX + x + 'px';
+//         scopeImg.style.top = positionNowY + y + 'px';
+//     }
+// }
