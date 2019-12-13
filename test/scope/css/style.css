@@ -6,6 +6,8 @@ body {
 #scope {
     width: 5%;
     position: absolute;
+    left: 500px;
+    top: 100px;
 }
 
 #target{

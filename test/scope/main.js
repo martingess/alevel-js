@@ -5,11 +5,16 @@
 // }
 
 let scopeImg = document.querySelector('#scope')
+scopeImg.style.top = 200 +'px';
+scopeImg.style.left = 200 +'px';
+
 let target = document.querySelector('#target')
 
 let scope = {
     scopePosX: null,
     scopePosY: null,
+    scopePassedX: 0,
+    scopePassedY: 0,
     mousePosX: null,
     mousePosY: null
 }
@@ -20,25 +25,33 @@ document.body.addEventListener('mousemove', (event) => { //отслеживае�
 });
 
 function moveScope() {
-    let step = 1 * Math.round > 0.5 ? 1 : 1 //задаем шаг как минус или как плюс
-    let passedWay = 0;
+    let stepY = 1
+    let stepX = 1
 
+    passedWayX = 0;
+    let passedWayY = 0;
     let move = setInterval(() => {
-        passedWay += step;
-        scope.scopePosX += step
-        scope.scopePosY += step
-        updateScopePosition(scope.scopePosX, scope.scopePosY)
-        if (passedWay > 100 || passedWay < -100){
-            clearInterval(move)
+        scope.scopePassedX += stepX;
+        scope.scopePassedY += stepY;
+        updateScopePosition(stepX, stepY)
+        if (scope.scopePassedY > 50 || scope.scopePassedY < -50){
+            scope.scopePassedY = scope.scopePassedY > 0 ? 50 : -50
+            stepY = -stepY;
         }
-    }, 100)
-
+        if (scope.scopePassedX > 60 || scope.scopePassedX < -60){
+            scope.scopePassedX = scope.scopePassedX > 0 ? 60 : -60
+            stepX = -stepX;
+        }
+    }, 10)
+    function updateScopePosition(x, y) {
+        let positionNowX = parseInt(scopeImg.style.left);
+        let positionNowY = parseInt(scopeImg.style.top);
+        scopeImg.style.left = positionNowX + x + 'px';
+        scopeImg.style.top = positionNowY + y + 'px';
+    }
 }
 
-function updateScopePosition(x, y) {
-    scopeImg.style.left = x + 'px'
-    scopeImg.style.top = y + 'px'
-}
+
 
 
 
