@@ -1,0 +1,14 @@
+body {
+    width: 1080px;
+    height: 1080px;
+}
+
+#scope {
+    width: 5%;
+    position: absolute;
+}
+
+#target{
+    width: 350px;
+    height: 350px;
+}
