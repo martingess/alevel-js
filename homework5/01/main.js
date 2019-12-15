@@ -1,21 +1,25 @@
-function addAndRotateImg() {
+function addAndRotateImg(imgId) {
     var url = 'str';
     var deg;
     while (url.slice(0, 8) !== 'https://' && url.slice(0, 7) !== 'http://') {
         url = prompt('Enter img url');
     }
+    imgId.src = url;
 
     while (isNaN(deg) && !isFinite(deg)) {
         deg = Number(prompt('Enter deg'));
     } 
 
-    for (let i = 0; i <= 5; i++) {
-        var img = document.createElement('img');
-        img.src = url;
-        img.style.transform = `rotate(${deg}deg)`;
-        document.body.appendChild(img);
+    var i = 0;
+    var rotate = setInterval( ()=>{
+        imgId.style.transform = `rotate(${deg}deg)`;
         deg+=90;
-    }
+        i++;
+        if (i >= 5){
+            clearInterval(rotate)
+        };
+    }, 1000)
 }
 
-addAndRotateImg()
+var myimg = document.querySelector('#myimg')
+addAndRotateImg(myimg)

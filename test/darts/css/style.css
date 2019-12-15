@@ -4,11 +4,18 @@ body {
 }
 
 #scope {
-    width: 5%;
+    height: 100px;
+    width: 100px;
     position: absolute;
+    background-image: url(../img/scope_PNG13033.png);
+    background-size: cover;
 }
 
 #target{
     width: 350px;
     height: 350px;
+    background-image: url(../img/target-1725624_1280.png);
+    background-size: cover;
+    display: flex;
+    
 }
