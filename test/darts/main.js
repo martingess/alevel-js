@@ -6,6 +6,9 @@ let targetImg = document.querySelector('#target')
 targetImg.style.width = 300 + 'px';
 targetImg.style.height = 300 + 'px';
 
+let scoring = document.querySelector('#scoring')
+
+
 function Scope(scopeImg) {
     this.scopePassedX = 0;
     this.scopePassedY = 0;
@@ -32,7 +35,7 @@ function Scope(scopeImg) {
                 this.scopePassedX = this.scopePassedX > 0 ? 60 : -60
                 this.stepX = -this.stepX;
             };
-        }, 10)
+        }, 100)
     };
     document.body.addEventListener('mousemove', (event) => { //отслеживаем движение мыши
         this.mousePosX = event.clientX;
@@ -47,17 +50,38 @@ function Scope(scopeImg) {
     })
     document.body.addEventListener('mouseup', () => {
         this.movingStop()
+
+        let differenceX = this.scopeCenterX - target.centerX;
+        let differenceY = this.scopeCenterY - target.centerY;
+        let targetAll = 10; //сколько всего делений
+        let targetRadius = parseInt(targetImg.style.width) / 2 //радиус цели
+        let step = targetRadius / targetAll; //шаг
+        let y = step; //начальное значение 
+        let arr = []; //все промежутки 
+        for (let i = 10; i >= 0; i--) {
+            arr.push({
+                radius: y,
+                score: i-1,
+                previous: 15
+            });
+            y += step
+        }
+        for (let key of arr) {
+            if (differenceX <= key.radius && differenceX >= -key.radius && differenceY <= key.radius && differenceY >= -key.radius) {
+                scoring.value += key.score;
+                break;
+            }
+        }
     })
 }
 
-let scope = new Scope(scopeImg);
-
-function Target(targetDomElem) {
+function Target(targetDomElem) { //конструктор целей
+    //позиционирование
     this.positionX = targetDomElem.offsetLeft;
     this.positionY = targetDomElem.offsetTop;
     this.centerX = this.positionX + (parseInt(targetDomElem.style.width) / 2);
     this.centerY = this.positionY + (parseInt(targetDomElem.style.width) / 2);
-
 }
 
 let target = new Target(targetImg)
+let scope = new Scope(scopeImg);
