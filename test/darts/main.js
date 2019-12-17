@@ -70,7 +70,7 @@ function Scope(scopeImg) {
 
         for (let key of arr) {
             if (radiusOfHit<=key.radius) {
-                scoring.value = scoring.value === '' ? key.score : Number(scoring.value) + key.score;
+                scoring.textContent = scoring.textContent === '' ? key.score : Number(scoring.textContent) + key.score;
                 break;
             }
         }
