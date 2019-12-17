@@ -4,7 +4,7 @@ scopeImg.style.left = 0 + 'px';
 
 let target = document.querySelector('#target')
 
-function Scope() {
+function Scope(scopeImg) {
     this.scopePassedX = 0;
     this.scopePassedY = 0;
     this.stepX = 1;
@@ -12,8 +12,12 @@ function Scope() {
     this.movingStart = () => {
         this.move = setInterval(() => {
             let updateScopePosition = (x, y) => {
-                scopeImg.style.left = this.mousePosX + this.scopePassedX + x + 'px';
-                scopeImg.style.top = this.mousePosY + this.scopePassedY + y + 'px';
+                this.currentPositionX = this.mousePosX + this.scopePassedX + x;
+                this.currentPositionY = this.mousePosY + this.scopePassedY + y;
+                this.scopeCenterX = this.currentPositionX + 50;
+                this.scopeCenterY = this.currentPositionY + 50;
+                scopeImg.style.left = this.currentPositionX + 'px';
+                scopeImg.style.top = this.currentPositionY + 'px';
             }
             this.scopePassedX += this.stepX;
             this.scopePassedY += this.stepY;
@@ -46,4 +50,4 @@ function Scope() {
 
 
 
-let scope = new Scope();
+let scope = new Scope(scopeImg);
