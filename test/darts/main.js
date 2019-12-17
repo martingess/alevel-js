@@ -16,9 +16,9 @@ function Scope(scopeImg) {
     this.stepY = 1;
     this.movingStart = () => {
         this.move = setInterval(() => {
-            let updateScopePosition = (x, y) => {
+            let updateScopePosition = (x, radius) => {
                 this.currentPositionX = this.mousePosX + this.scopePassedX + x;
-                this.currentPositionY = this.mousePosY + this.scopePassedY + y;
+                this.currentPositionY = this.mousePosY + this.scopePassedY + radius;
                 this.scopeCenterX = this.currentPositionX + 50;
                 this.scopeCenterY = this.currentPositionY + 50;
                 scopeImg.style.left = this.currentPositionX + 'px';
@@ -50,25 +50,27 @@ function Scope(scopeImg) {
     })
     document.body.addEventListener('mouseup', () => {
         this.movingStop()
-
+        
         let differenceX = this.scopeCenterX - target.centerX;
         let differenceY = this.scopeCenterY - target.centerY;
         let targetAll = 10; //сколько всего делений
-        let targetRadius = parseInt(targetImg.style.width) / 2 //радиус цели
-        let step = targetRadius / targetAll; //шаг
-        let y = step; //начальное значение 
+        let targetRadiusAll = parseInt(targetImg.style.width) / 2 //радиус цели
+        let step = targetRadiusAll / targetAll; //шаг
+        let radius = step; //начальное значение 
         let arr = []; //все промежутки 
+
         for (let i = 10; i >= 0; i--) {
             arr.push({
-                radius: y,
-                score: i-1,
-                previous: 15
+                radius: radius,
+                score: i,
             });
-            y += step
+            radius += step;
         }
+        let radiusOfHit = Math.sqrt(differenceX**2+differenceY**2);
+
         for (let key of arr) {
-            if (differenceX <= key.radius && differenceX >= -key.radius && differenceY <= key.radius && differenceY >= -key.radius) {
-                scoring.value += key.score;
+            if (radiusOfHit<=key.radius) {
+                scoring.value = scoring.value === '' ? key.score : Number(scoring.value) + key.score;
                 break;
             }
         }
