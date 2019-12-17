@@ -2,7 +2,9 @@ let scopeImg = document.querySelector('#scope')
 scopeImg.style.top = 0 + 'px';
 scopeImg.style.left = 0 + 'px';
 
-let target = document.querySelector('#target')
+let targetImg = document.querySelector('#target')
+targetImg.style.width = 300 + 'px';
+targetImg.style.height = 300 + 'px';
 
 function Scope(scopeImg) {
     this.scopePassedX = 0;
@@ -40,14 +42,22 @@ function Scope(scopeImg) {
         clearInterval(this.move)
     };
 
-    document.body.addEventListener('mousedown', ()=>{
+    document.body.addEventListener('mousedown', () => {
         this.movingStart()
     })
-    document.body.addEventListener('mouseup', ()=>{
+    document.body.addEventListener('mouseup', () => {
         this.movingStop()
     })
 }
 
-
-
 let scope = new Scope(scopeImg);
+
+function Target(targetDomElem) {
+    this.positionX = targetDomElem.offsetLeft;
+    this.positionY = targetDomElem.offsetTop;
+    this.centerX = this.positionX + (parseInt(targetDomElem.style.width) / 2);
+    this.centerY = this.positionY + (parseInt(targetDomElem.style.width) / 2);
+
+}
+
+let target = new Target(targetImg)
