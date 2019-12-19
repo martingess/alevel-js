@@ -1,5 +1,19 @@
-var myElement = document.getElementById('ilonmaks')
+function one() {
+    console.log('one');
 
-myElement.onclick = () => {
-    console.log('hey, ho!')
+    function two() {
+        console.log('two');
+
+        function three() {
+            console.log('three');
+
+            function four() {
+                console.log('four');
+            }
+            four();
+        }
+        three();
+    }
+    two();
 }
+one()

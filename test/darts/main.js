@@ -1,3 +1,4 @@
+//иницилизация DOM элементов в коде
 let scopeImg = document.querySelector('#scope')
 scopeImg.style.top = 0 + 'px';
 scopeImg.style.left = 0 + 'px';
@@ -14,6 +15,8 @@ let scoring = document.querySelector('#scoring')
 let bullet = document.querySelector('#bullet-hole')
 bullet.style.width = '24px';
 bullet.style.height = '24px';
+
+let difficult = document.querySelector('#difficult')
 
 function Scope(scopeImg) {
     let scopePassedX = 0; //пройденая прицелом дистанция по
