@@ -21,6 +21,10 @@ let control = {
         add: document.getElementById('noteAddBtn'),
         addInfo: document.getElementById('noteAddData'),
         list: document.getElementById('noteList')
+    },
+    navigation: {
+        login: document.getElementById('navLogin'),
+        register: document.getElementById('navRegister')
     }
 };
 
@@ -47,14 +51,13 @@ function moveTo(event, toAdress) {
 window.addEventListener("hashchange", moveTo);
 
 // При загрузке страницы
+let pageLoaded = false;
 window.notes = [];
 let userData = {
     userName: window.sessionStorage.getItem('logedInAs')
 };
-getNotesFromLocalStorage();
 moveTo();
-loadList();
-
+isLogedIn();
 // Регистрация
 
 function getUserInfo(userName) {
@@ -82,6 +85,23 @@ function register() {
 
 // Логин
 
+function hideElement(element) {
+    for (let elem of arguments) {
+        elem.style.display = 'none'
+    }
+}
+
+function isLogedIn() {
+    if (userData.userName) {
+        hideElement(control.navigation.login, control.navigation.register)
+        if (pageLoaded === false) {
+            getNotesFromLocalStorage();
+            loadList();
+            moveTo(null, 'todo');
+        }
+    }
+}
+
 function login() {
     let login = control.login.username.value;
     let password = sha256(control.login.password.value);
@@ -90,6 +110,7 @@ function login() {
         if (userInfo.password === password) {
             alert('Успех!');
             window.sessionStorage.setItem('logedInAs', login)
+            userData.userName = login;
             getNotesFromLocalStorage();
             moveTo(null, 'login');
         } else {
@@ -116,16 +137,24 @@ function getNotesFromLocalStorage() {
 }
 
 function loadList() {
-    notes.forEach(value => {
-        createNote(value)
-    })
+    if (pageLoaded) {
+        let el = document.createElement('li');
+        el.textContent = notes[notes.length - 1];
+        control.todo.list.prepend(el);
+    } else {
+        notes.forEach(value => {
+            let el = document.createElement('li');
+            el.textContent = value;
+            control.todo.list.prepend(el);
+            pageLoaded = true;
+        })
+    }
 }
 
 function createNote(text) {
-    let el = document.createElement('li');
-    el.textContent = text;
-    control.todo.list.prepend(el);
-    notes.push(el.textContent);
+    notes.push(text);
+    sendNotesToLocalStorage()
+    loadList();
 }
 
 // События
@@ -143,5 +172,4 @@ control.register.btn.addEventListener('click', (event) => {
 
 control.todo.add.addEventListener('click', () => {
     createNote(control.todo.addInfo.value)
-    sendNotesToLocalStorage()
 })
