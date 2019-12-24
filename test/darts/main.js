@@ -24,7 +24,7 @@ function Scope(scopeImg) {
   this.stepX = 1; // шаг для дистпнции
   this.stepY = 1;
   this.movingStart = () => { // метод активирующий движение прицела
-    this.move = setInterval(() => {[0ijz`df[iuas[0hiqewfgdsfvouhadvhjowebbjohbo[hjadfvp['ijadsfv'pkdsv'pasv'pihwvf]]]]]
+    this.move = setInterval(() => {
       const updateScopePosition = (x, radius) => {
         this.currentPositionX = this.mousePosX + scopePassedX + x;
         this.currentPositionY = this.mousePosY + scopePassedY + radius;

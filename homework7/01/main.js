@@ -17,7 +17,6 @@ function displayValue(arr) {
     } else if (typeof (currentValue) === 'object') { //проверка на объект 
         displayValue(Object.values(currentValue));
     }
-
     if (typeof (currentValue) !== 'object') // не выводим лишний мусор в консоль
         console.log(currentValue);
     displayValue(arr);
