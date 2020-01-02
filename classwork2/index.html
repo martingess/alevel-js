@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        html, body {
+            height: 100%;
+        }
+        #menu {
+            width: 200px;
+            background-color: red;
+            height: 300px;
+            position: absolute;
+            top: 60px;
+            left: -200px;
+            transition: all 0.3s;
+        }
+
+        * {
+            font-size: 30px;
+        }
+
+        #menu.active {
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <button id='open'>Open</button>
+
+    <div id="menu">
+        <ul>
+            <li>SubMenu 1</li>
+            <li>SubMenu 2</li>
+            <li>SubMenu 3</li>
+            <li>SubMenu 4</li>
+            <li>SubMenu 5</li>
+        </ul>
+
+    </div>
+    <script src="main.js"></script>
+</body>
+
+</html>
