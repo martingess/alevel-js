@@ -2,6 +2,6 @@
 
 const myunique = document.getElementById('myunique');
 myunique.onclick = () => {
-    myunique.innerText = myunique.classList.length;
+    myunique.innerText = myunique.classList.value;
 }
 
