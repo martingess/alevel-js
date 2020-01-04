@@ -3,5 +3,5 @@
 //emmet: p{$}*20
 
 for (let item of document.getElementsByTagName('p')){
-    item.addEventListener('click', () => item.textContent **= 2)
+    item.onclick = () => item.textContent **= 2
 }
