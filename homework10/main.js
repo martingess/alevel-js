@@ -56,4 +56,48 @@ setTimeout(function () {
         }
     }()
 }, 10);
-//myBind
+
+//Задание 1 Ирины
+
+let group = [{
+        name: "Vasya",
+        lastName: "Petrov",
+        age: 18,
+        notebook: false,
+    },
+    {
+        name: "Kolya",
+        lastName: "Ivanov",
+        age: 31,
+        notebook: false,
+    },
+    {
+        name: "Alexey",
+        lastName: "Vasiliev",
+        age: 24,
+        notebook: true,
+    }
+]
+
+function getStudentsList(group) {
+    group.forEach((value) => {
+        let result = '';
+        Object.keys(value).forEach(item => {
+            result += `${item}: ${value[item]}, `
+        })
+        console.log(result)
+    })
+}
+
+function addNewStudent(name, lastName, age, notebook, group) {
+    group.push({
+        name: name,
+        lastName: lastName,
+        age: age,
+        notebook: notebook
+    })
+}
+
+function deleteChars(string) {
+    return string.split('').filter((value)=>value.charCodeAt()<1103 && value.charCodeAt()>1040)
+} //пробел не входит в диапазон, но таковы условия задания 
