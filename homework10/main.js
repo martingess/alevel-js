@@ -99,5 +99,24 @@ function addNewStudent(name, lastName, age, notebook, group) {
 }
 
 function deleteChars(string) {
-    return string.split('').filter((value)=>value.charCodeAt()<1103 && value.charCodeAt()>1040)
-} //пробел не входит в диапазон, но таковы условия задания 
+    return string.split('').filter((value) => value.charCodeAt() < 1103 && value.charCodeAt() > 1040)
+} //пробелы - символы, они не входит в диапазон, но таковы условия задания
+
+//Задание 4
+
+function fastSearch(arr, searchedIndex) {
+    let mid, guess;
+    let max = arr.length - 1;
+    let min = 0;
+    while (true) {
+        mid = Math.ceil((max - min) / 2 + min);
+        guess = arr[mid];
+        if (guess === searchedIndex) {
+            return mid
+        } else if (guess > searchedIndex) {
+            max = mid
+        } else {
+            min = mid
+        }
+    }
+}

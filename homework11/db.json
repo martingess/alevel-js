@@ -1,0 +1,39 @@
+{
+  "users": [
+    {
+      "name": "vladimir",
+      "age": 32,
+      "email": "vlad@gmail.com",
+      "adress": "Kharkiv, Lenina str., 2",
+      "pets": "dog"
+    },
+    {
+      "name": "ivan",
+      "age": 25,
+      "email": "ivan@gmail.com",
+      "adress": "Kharkiv, Shevchenko str., 5",
+      "pets": "cat"
+    },
+    {
+      "name": "petr",
+      "age": 15,
+      "email": "petr@gmail.com",
+      "adress": "undefined",
+      "pets": "cat"
+    },
+    {
+      "name": "elena",
+      "age": 21,
+      "email": "lena@gmail.com",
+      "adress": "Kiev, Ulyanova str., 23",
+      "pets": "none"
+    },    
+    {
+      "name": "vasilii",
+      "age": "undefined",
+      "email": "vasya@gmail.com",
+      "adress": "Lviv, Kobzar str., 16",
+      "pets": "cat"
+    }
+  ]
+}
