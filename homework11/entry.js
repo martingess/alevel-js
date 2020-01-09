@@ -1,8 +1,8 @@
 import Table from './table.js';
 import Data from './data.js';
-
+import Control from './control.js'
 const app = document.getElementById('app');
-const table = new Table(5, ['name', 'age', 'email', 'adress', 'pets'])
+export const table = new Table(6, ['id', 'name', 'age', 'email', 'adress', 'pets'])
 table.createTable();
 
 (async () => {
@@ -10,4 +10,9 @@ table.createTable();
   data.forEach(element => {
     table.createRow(element)
   });
+  Control.deleteRow()
+  Control.editRow()
 })()
+
+
+Data.patchUser('1')
