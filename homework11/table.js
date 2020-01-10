@@ -1,5 +1,7 @@
 import Data from './data.js';
-import {Control} from './control.js'
+import {
+  Control
+} from './control.js'
 
 export default class Table {
   constructor(width, arrHeadNames) {
@@ -8,32 +10,54 @@ export default class Table {
     this.arrHeadNames = arrHeadNames
     this.typeOfControlBtns = {
       "plane": {
-        names: ["редактировать", "удалить"],
-        classes: ['edit-btn', 'delete-btn']
+        btn1: {
+          name: "редактировать",
+          classes: ['edit-btn', 'btn', 'btn-info']
+        },
+        btn2: {
+          name: "удалить",
+          classes: ['delete-btn', 'btn', 'btn-danger']
+        }
       },
       "edit": {
-        names: ["сохранить", "отменить"],
-        classes: ['save-btn', 'cancel-btn']
+        btn1: {
+          name: "сохранить",
+          classes: ['save-btn', 'btn', 'btn-success']
+        },
+        btn2: {
+          name: "отменить",
+          classes: ['cancel-btn', 'btn', 'btn-danger']
+        },
       },
       "create": {
-        names: ["создать"],
-        classes: ["create-btn"]
+        btn1: {
+          name: "создать",
+          classes: ['create-btn', 'btn', "btn-primary"]
+        }
       },
       "saveCreated": {
-        names: ["сохранить", 'удалить'],
-        classes: ['saveCreated', 'deleteCreated-btn']
+        btn1: {
+          name: 'сохранить',
+          classes: ['saveCreated-btn', 'btn', 'btn-success']
+        },
+        btn2: {
+          name: "удалить",
+          classes: ['deleteCreated-btn', 'btn', 'btn-danger']
+        }
       }
+
     }
   }
 
   async createTable() {
     this.createRow(this.width, this.arrHeadNames, 'th', false)
-    app.append(this.table);
+    let table = app.appendChild(this.table);
     const data = await Data.getUsersData();
     data.forEach(element => {
       this.createRow(this.width, element)
     });
     this.createBtnCreate()
+    table.classList.add('table')
     Control.updateRowListners()
   }
 
@@ -60,13 +84,17 @@ export default class Table {
 
   createControlElement(cell, objWithBtnsInfo) { //btn - an object, which contains name and class of button
     const btn1 = cell.appendChild(document.createElement('button'));
-    btn1.classList.add(objWithBtnsInfo.classes[0]);
-    btn1.textContent = objWithBtnsInfo.names[0];
+    objWithBtnsInfo.btn1.classes.forEach((value) => {
+      btn1.classList.add(value);
+    })
+    btn1.textContent = objWithBtnsInfo.btn1.name;
 
-    if (Object.values(objWithBtnsInfo.names).length > 1) {
+    if (Object.values(objWithBtnsInfo).length > 1) {
       const btn2 = cell.appendChild(document.createElement('button'));
-      btn2.classList.add(objWithBtnsInfo.classes[1]);
-      btn2.textContent = objWithBtnsInfo.names[1];
+      objWithBtnsInfo.btn2.classes.forEach((value) => {
+        btn2.classList.add(value);
+      })
+      btn2.textContent = objWithBtnsInfo.btn2.name;
     }
   }
 

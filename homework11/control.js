@@ -32,7 +32,7 @@ export const Control = {
 
         }
         //saveCreated
-        if (event.target.classList.contains('saveCreated')) {
+        if (event.target.classList.contains('saveCreated-btn')) {
           const row = event.target.closest('tr')
           Data.createUser(table.getRowInfo(row)) //send info to server
           table.changeInputsToSimpleField("save", row)
