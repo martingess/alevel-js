@@ -2,42 +2,44 @@ import Data from './data.js'
 import {
   table
 } from './entry.js'
-export default {
-  deleteRow() {
+export const Control = {
+  updateRowListners() {
     for (let value of document.getElementsByTagName('tr')) {
-      value.onclick = function () { //delete button pressed
+      //if delete button pressed
+      value.onclick = function () {
         if (event.target.classList.contains('delete-btn')) {
           this.remove()
           const id = this.firstChild.textContent;
           Data.deleteUser(id)
         }
-      }
-    }
-  },
-  editRow() {
-    for (let value of document.getElementsByTagName('tr')) {
-      value.addEventListener('click', editBtnPressed)
-      value.addEventListener('click', function (e) {
-        if (e.target.classList.contains('create-btn')) { //cancel btn logic
+        //if createBtnPressed
+        if (event.target.classList.contains('create-btn')) { //cancel btn logic
           table.table.rows[table.table.rows.length - 1].remove()
           const row = table.createRow(table.width + 1, {}, "td", false); //create row //replace last row with it and init input
           table.table.lastChild.firstChild.textContent = Number(row.previousSibling.cells[0].textContent) + 1
           table.createInputsInCells(row.cells);
-          table.createControlElement(row.cells[row.cells.length - 1], table.typeOfControlBtns["edit"])
-          
+          table.createControlElement(row.cells[row.cells.length - 1], table.typeOfControlBtns["saveCreated"])
+          Control.updateRowListners()
         }
+        //if editBtnPressed
+        if (event.target.classList.contains('edit-btn')) {
+          const pressedRow = this;
+          table.createInputsInCells(pressedRow.cells);
 
-      })
-    }
+          table.createControlElement(table.deleteControllBtns(pressedRow), table.typeOfControlBtns['edit'])
+          createSaveBtnLogic()
+          createCancelBtnLogic()
 
-    function editBtnPressed() {
-      if (event.target.classList.contains('edit-btn')) {
-        const pressedRow = this;
-        table.createInputsInCells(pressedRow.cells);
-
-        table.createControlElement(table.deleteControllBtns(pressedRow), table.typeOfControlBtns['edit'])
-        createSaveBtnLogic()
-        createCancelBtnLogic()
+        }
+        //saveCreated
+        if (event.target.classList.contains('saveCreated')) {
+          const row = event.target.closest('tr')
+          Data.createUser(table.getRowInfo(row)) //send info to server
+          table.changeInputsToSimpleField("save", row)
+          table.createControlElement(table.deleteControllBtns(row), table.typeOfControlBtns['plane']);
+          table.createBtnCreate();
+          Control.updateRowListners()
+        }
 
         function createSaveBtnLogic() {
           const listOfSaveBtns = document.getElementsByClassName('save-btn');
@@ -46,6 +48,7 @@ export default {
               elem.onclick = (event) => {
                 const row = event.target.closest('tr')
                 Data.putUserInfo(row.cells[0].textContent, table.getRowInfo(row)) //send info to server
+
                 table.changeInputsToSimpleField("save", row)
                 table.createControlElement(table.deleteControllBtns(row), table.typeOfControlBtns['plane']);
               }
@@ -58,7 +61,6 @@ export default {
           for (let elem of listOfCancelBtns) {
             if (!elem.onclick) {
               elem.onclick = cancelBtnPressed(elem.closest('tr'));
-
               function cancelBtnPressed(pressedRow) {
                 let oldInfoOfCell = table.getRowInfo(pressedRow);
                 return event => {
@@ -71,7 +73,6 @@ export default {
           }
         }
       }
-
     }
   }
 }

@@ -1,5 +1,5 @@
 import Data from './data.js';
-import Control from './control.js'
+import {Control} from './control.js'
 
 export default class Table {
   constructor(width, arrHeadNames) {
@@ -18,6 +18,10 @@ export default class Table {
       "create": {
         names: ["создать"],
         classes: ["create-btn"]
+      },
+      "saveCreated": {
+        names: ["сохранить"],
+        classes: ['saveCreated']
       }
     }
   }
@@ -30,8 +34,7 @@ export default class Table {
       this.createRow(this.width, element)
     });
     this.createBtnCreate()
-    Control.deleteRow()
-    Control.editRow()
+    Control.updateRowListners()
   }
 
   createRow(width, data = {}, typeOfCell = 'td', controlElement = true) {
