@@ -6,7 +6,7 @@
       "age": "21",
       "email": "alex@gmail.com",
       "adress": "ул. Пушкина, дом Колотушкина",
-      "pets": "слон"
+      "pets": "слон2"
     },
     {
       "id": 2,
@@ -14,7 +14,7 @@
       "age": "25",
       "email": "ivan@gmail.com",
       "adress": "Kharkiv, Shevchenko str., 5",
-      "pets": "cat"
+      "pets": "хорёк"
     },
     {
       "id": 3,

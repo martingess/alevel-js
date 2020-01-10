@@ -1,50 +1,72 @@
+import Data from './data.js';
+import Control from './control.js'
+
 export default class Table {
   constructor(width, arrHeadNames) {
     this.width = width;
     this.table = document.createElement('table');
     this.arrHeadNames = arrHeadNames
-  }
-
-  createTable() {
-    this.createRow(this.arrHeadNames, 'th')
-    app.append(this.table);
-  }
-
-  createRow(data, typeOfCell = 'td') {
-    let userInfo = Object.values(data)
-    let row = document.createElement('tr')
-    for (let i = 0; i < this.width; i++) { //create cell in row
-      const dataCell = this.createCell(row, typeOfCell);
-      dataCell.textContent = userInfo[i];
+    this.typeOfControlBtns = {
+      "plane": {
+        names: ["редактировать", "удалить"],
+        classes: ['edit-btn', 'delete-btn']
+      },
+      "edit": {
+        names: ["сохранить", "отменить"],
+        classes: ['save-btn', 'cancel-btn']
+      },
+      "create": {
+        names: ["создать"],
+        classes: ["create-btn"]
+      }
     }
+  }
 
-    if (typeOfCell === 'td') { //data control buttons
+  async createTable() {
+    this.createRow(this.width, this.arrHeadNames, 'th', false)
+    app.append(this.table);
+    const data = await Data.getUsersData();
+    data.forEach(element => {
+      this.createRow(this.width, element)
+    });
+    this.createBtnCreate()
+    Control.deleteRow()
+    Control.editRow()
+  }
+
+  createRow(width, data = {}, typeOfCell = 'td', controlElement = true) {
+    let row = document.createElement('tr')
+    let userInfo = data ? Object.values(data) : data;
+    for (let i = 0; i < width; i++) { //create cell in row
+      const dataCell = this.createCell(row, typeOfCell);
+      if (data) {
+        dataCell.textContent = userInfo[i];
+      }
+    }
+    if (controlElement === true) { //data control buttons
       const controlCell = this.createCell(row)
-      this.createControlElement(controlCell, {
-        name: "Редактировать",
-        class: "edit-btn"
-      }, {
-        name: "Удалить",
-        class: "delete-btn"
-      })
+      this.createControlElement(controlCell, this.typeOfControlBtns["plane"])
     }
     this.table.append(row);
-
+    return row;
   }
 
   createCell(row, typeOfCell = 'td') {
     return row.appendChild(document.createElement(typeOfCell))
   }
 
-  createControlElement(cell, btn1, btn2) { //btn - an object, which contains name and class of button
+  createControlElement(cell, objWithBtnsInfo) { //btn - an object, which contains name and class of button
+    const btn1 = cell.appendChild(document.createElement('button'));
+    btn1.classList.add(objWithBtnsInfo.classes[0]);
+    btn1.textContent = objWithBtnsInfo.names[0];
 
-    const editBtn = cell.appendChild(document.createElement('button'));
-    const deleteBtn = cell.appendChild(document.createElement('button'));
-    editBtn.textContent = btn1.name;
-    editBtn.classList.add(btn1.class);
-    deleteBtn.textContent = btn2.name;
-    deleteBtn.classList.add(btn2.class);
+    if (Object.values(objWithBtnsInfo.names).length > 1) {
+      const btn2 = cell.appendChild(document.createElement('button'));
+      btn2.classList.add(objWithBtnsInfo.classes[1]);
+      btn2.textContent = objWithBtnsInfo.names[1];
+    }
   }
+
   deleteControllBtns(pressedRow) {
     const controlCell = pressedRow.cells[pressedRow.cells.length - 1];
     while (controlCell.firstChild) {
@@ -85,5 +107,9 @@ export default class Table {
       }
     }
     return result;
+  }
+  createBtnCreate() {
+    const row = this.createRow(this.width + 1, null, "td", false)
+    this.createControlElement(row.cells[row.cells.length - 1], this.typeOfControlBtns['create'])
   }
 }

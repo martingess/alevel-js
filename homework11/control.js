@@ -17,20 +17,25 @@ export default {
   editRow() {
     for (let value of document.getElementsByTagName('tr')) {
       value.addEventListener('click', editBtnPressed)
+      value.addEventListener('click', function (e) {
+        if (e.target.classList.contains('create-btn')) { //cancel btn logic
+          table.table.rows[table.table.rows.length - 1].remove()
+          const row = table.createRow(table.width + 1, {}, "td", false); //create row //replace last row with it and init input
+          table.table.lastChild.firstChild.textContent = Number(row.previousSibling.cells[0].textContent) + 1
+          table.createInputsInCells(row.cells);
+          table.createControlElement(row.cells[row.cells.length - 1], table.typeOfControlBtns["edit"])
+          
+        }
+
+      })
     }
 
     function editBtnPressed() {
-      const pressedRow = this;
       if (event.target.classList.contains('edit-btn')) {
+        const pressedRow = this;
         table.createInputsInCells(pressedRow.cells);
 
-        table.createControlElement(table.deleteControllBtns(pressedRow), { //deleteControlBtns returns cell
-          name: 'Сохранить',
-          'class': 'save-btn'
-        }, {
-          name: 'Отменить',
-          'class': 'cancel-btn'
-        });
+        table.createControlElement(table.deleteControllBtns(pressedRow), table.typeOfControlBtns['edit'])
         createSaveBtnLogic()
         createCancelBtnLogic()
 
@@ -42,13 +47,7 @@ export default {
                 const row = event.target.closest('tr')
                 Data.putUserInfo(row.cells[0].textContent, table.getRowInfo(row)) //send info to server
                 table.changeInputsToSimpleField("save", row)
-                table.createControlElement(table.deleteControllBtns(row), {
-                  name: "Редактировать",
-                  class: "edit-btn"
-                }, {
-                  name: "Удалить",
-                  class: "delete-btn"
-                });
+                table.createControlElement(table.deleteControllBtns(row), table.typeOfControlBtns['plane']);
               }
             }
           }
@@ -65,19 +64,12 @@ export default {
                 return event => {
                   const row = event.target.closest('tr')
                   table.changeInputsToSimpleField("cancel", row, oldInfoOfCell)
-                  table.createControlElement(table.deleteControllBtns(row), {
-                    name: "Редактировать",
-                    class: "edit-btn"
-                  }, {
-                    name: "Удалить",
-                    class: "delete-btn"
-                  });
+                  table.createControlElement(table.deleteControllBtns(row), table.typeOfControlBtns["plane"]);
                 }
               }
             }
           }
         }
-
       }
 
     }
