@@ -20,8 +20,8 @@ export default class Table {
         classes: ["create-btn"]
       },
       "saveCreated": {
-        names: ["сохранить"],
-        classes: ['saveCreated']
+        names: ["сохранить", 'удалить'],
+        classes: ['saveCreated', 'deleteCreated-btn']
       }
     }
   }

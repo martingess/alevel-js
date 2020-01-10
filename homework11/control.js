@@ -40,6 +40,11 @@ export const Control = {
           table.createBtnCreate();
           Control.updateRowListners()
         }
+        if (event.target.classList.contains('deleteCreated-btn')) {
+        event.target.closest('tr').remove();
+        table.createBtnCreate()
+        Control.updateRowListners()
+        }
 
         function createSaveBtnLogic() {
           const listOfSaveBtns = document.getElementsByClassName('save-btn');
@@ -61,6 +66,7 @@ export const Control = {
           for (let elem of listOfCancelBtns) {
             if (!elem.onclick) {
               elem.onclick = cancelBtnPressed(elem.closest('tr'));
+
               function cancelBtnPressed(pressedRow) {
                 let oldInfoOfCell = table.getRowInfo(pressedRow);
                 return event => {
