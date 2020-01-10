@@ -61,4 +61,29 @@ export default class Table {
       listOfChild[i].appendChild(inputElement);
     }
   }
+  changeInputsToSimpleField(typeOfAction, row, data) {
+    if (typeOfAction === "save") {
+      for (let i = 1; i < row.cells.length - 1; i++) { //starts from field "name"
+        const textOfInput = row.cells[i].firstChild.value;
+        row.cells[i].textContent = textOfInput;
+      }
+    } else if (typeOfAction === "cancel") {
+      const previousCellInfo = Object.values(data);
+      for (let i = 0; i < row.cells.length - 1; i++) { //starts from field "id", because data has it 
+        row.cells[i].textContent = previousCellInfo[i];
+      }
+    }
+  }
+
+  getRowInfo(row) {
+    let result = {};
+    for (let i = 0; i < row.cells.length - 1; i++) {
+      if (row.cells[i].firstChild.value) { //check if the cell has input
+        result[this.arrHeadNames[i]] = row.cells[i].firstChild.value
+      } else { //if it hasn't input - try to take its inner text
+        result[this.arrHeadNames[i]] = row.cells[i].textContent
+      }
+    }
+    return result;
+  }
 }

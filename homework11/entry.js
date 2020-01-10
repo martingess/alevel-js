@@ -14,5 +14,4 @@ table.createTable();
   Control.editRow()
 })()
 
-
-Data.patchUser('1')
+table.getRowInfo(document.getElementsByTagName('tr')[0])

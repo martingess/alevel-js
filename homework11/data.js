@@ -8,8 +8,8 @@ export default {
       method: "DELETE"
     })
   },
-  async patchUser(userId, patchData) {
-    const response = await fetch(`http://localhost:3000/users/${userId}`, {
+  async putUserInfo(userId, patchData) {
+    await fetch(`http://localhost:3000/users/${userId}`, {
       method: "PUT",
       headers: {
         'Content-Type': 'application/json'

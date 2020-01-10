@@ -1,12 +1,17 @@
 {
   "users": [
     {
-      "id": 1
+      "id": 1,
+      "name": "Алексей",
+      "age": "21",
+      "email": "alex@gmail.com",
+      "adress": "ул. Пушкина, дом Колотушкина",
+      "pets": "слон"
     },
     {
       "id": 2,
       "name": "ivan",
-      "age": 25,
+      "age": "25",
       "email": "ivan@gmail.com",
       "adress": "Kharkiv, Shevchenko str., 5",
       "pets": "cat"
