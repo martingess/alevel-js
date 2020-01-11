@@ -41,9 +41,9 @@ export const Control = {
           Control.updateRowListners()
         }
         if (event.target.classList.contains('deleteCreated-btn')) {
-        event.target.closest('tr').remove();
-        table.createBtnCreate()
-        Control.updateRowListners()
+          event.target.closest('tr').remove();
+          table.createBtnCreate()
+          Control.updateRowListners()
         }
 
         function createSaveBtnLogic() {
