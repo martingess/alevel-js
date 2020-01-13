@@ -35,6 +35,12 @@
       "message": "Test passed",
       "timestamp": "0:19:2",
       "id": 3
+    },
+    {
+      "author": "Ivan",
+      "message": "last check",
+      "timestamp": "0:29:26",
+      "id": 4
     }
   ]
 }
