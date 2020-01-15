@@ -43,7 +43,18 @@ function makeSaver(foo) {
 // value3 === value4 // тоже должно быть true
 
 // ========
-//Final Countdown
+
+
+function bindDIY(fn, context) {
+    const bindedArgs = [].slice.call(arguments, 2);
+    return function () {
+        const fnArgs = [].slice.call(arguments);
+        return fn.apply(thisContext, bindedArgs.concat(fnArgs));
+    };
+};
+
+
+// ========
 
 setTimeout(function () {
     let i = 5;
@@ -78,6 +89,7 @@ let group = [{
         notebook: true,
     }
 ]
+//Задание 2 Ирины
 
 function getStudentsList(group) {
     group.forEach((value) => {
@@ -98,25 +110,38 @@ function addNewStudent(name, lastName, age, notebook, group) {
     })
 }
 
+//Задание 3 Ирины
+
 function deleteChars(string) {
     return string.split('').filter((value) => value.charCodeAt() < 1103 && value.charCodeAt() > 1040)
 } //пробелы - символы, они не входит в диапазон, но таковы условия задания
 
 //Задание 4
 
-function fastSearch(arr, searchedIndex) {
-    let mid, guess;
-    let max = arr.length - 1;
-    let min = 0;
-    while (true) {
-        mid = Math.ceil((max - min) / 2 + min);
-        guess = arr[mid];
-        if (guess === searchedIndex) {
-            return mid
-        } else if (guess > searchedIndex) {
-            max = mid
-        } else {
-            min = mid
-        }
+const arr = [0, 3, 51, 23, 5, 7, 8, 5]
+
+function sortArray(array) {
+    const copiedArr = array.slice()
+    const sortedArr = [];
+    while (copiedArr.length) {
+        sortedArr.push(...copiedArr.splice(findSmallest(copiedArr)[1], 1))
     }
+    return sortedArr
+
+    function findSmallest(arr) {
+        return arr.reduce((acc, cur, index) => cur < acc[0] ? [cur, index] : acc, [arr[0], 0])
+    }
+}
+
+//Задание 5
+
+const firstName = ["Алексей", "Владимир", "Иван"]
+const lastName = ["Иванов", "Кравцов", "Васильев"]
+
+function getFullName(arrFirstName, arrLastName) {
+    const fullName = []
+    for (let i = 0; i < arrFirstName.length; i++) {
+        fullName.push(`${arrFirstName[i]} ${arrLastName[i]}`)
+    }
+    return fullName
 }
